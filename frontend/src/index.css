@@ -1,0 +1,77 @@
+/**
+ * Global styles for Narco Life RPG
+ * Includes Tailwind CSS imports and custom styling for the dark urban theme
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom base styles */
+@layer base {
+  body {
+    @apply bg-charcoal text-pale-white font-sans antialiased;
+    background-image: radial-gradient(circle, transparent 20%, rgba(14, 14, 14, 0.8) 100%);
+    min-height: 100vh;
+  }
+  
+  * {
+    @apply box-border;
+  }
+}
+
+/* Custom component styles */
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-to-r from-crimson to-red-700 hover:from-red-700 hover:to-crimson 
+           text-pale-white font-bold py-3 px-6 rounded-lg shadow-crimson-glow 
+           transition-all duration-300 transform hover:scale-105 hover:shadow-lg;
+  }
+  
+  .btn-secondary {
+    @apply bg-gradient-to-r from-deep-gray to-gray-700 hover:from-gray-700 hover:to-deep-gray 
+           text-pale-white font-semibold py-2 px-4 rounded-lg border border-muted-gold 
+           transition-all duration-300 hover:shadow-glow;
+  }
+  
+  .card {
+    @apply bg-deep-gray border border-gray-600 rounded-lg p-6 shadow-lg 
+           backdrop-blur-sm bg-opacity-90;
+  }
+  
+  .input-field {
+    @apply bg-deep-gray border border-gray-600 rounded-lg px-4 py-2 
+           text-pale-white placeholder-gray-400 focus:border-muted-gold 
+           focus:outline-none focus:ring-2 focus:ring-muted-gold focus:ring-opacity-50;
+  }
+  
+  .hud-stat {
+    @apply bg-deep-gray bg-opacity-80 border border-muted-gold rounded-lg 
+           px-3 py-2 text-sm font-semibold;
+  }
+  
+  .mission-card {
+    @apply card hover:border-muted-gold transition-all duration-300 
+           cursor-pointer transform hover:scale-102;
+  }
+  
+  .npc-card {
+    @apply card hover:border-crimson transition-all duration-300 
+           cursor-pointer transform hover:scale-102;
+  }
+}
+
+/* Custom utility classes */
+@layer utilities {
+  .text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  }
+  
+  .glow-text {
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+  }
+  
+  .crimson-glow-text {
+    text-shadow: 0 0 10px rgba(179, 0, 0, 0.8);
+  }
+}
