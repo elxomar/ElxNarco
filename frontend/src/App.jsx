@@ -11,7 +11,6 @@
 
 import React, { useState, useEffect } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
-import { Auth } from 'aws-amplify'
 
 // Import components
 import LoginScreen from './components/auth/LoginScreen'
@@ -42,12 +41,12 @@ function App() {
   }, [])
 
   /**
-   * Checks current authentication state with AWS Cognito
+   * Checks current authentication state with mock Auth
    * Updates app state based on authentication status
    */
   const checkAuthState = async () => {
     try {
-      const currentUser = await Auth.currentAuthenticatedUser()
+      const currentUser = await window.Auth.currentAuthenticatedUser()
       setUser(currentUser)
       setIsAuthenticated(true)
       
@@ -72,7 +71,7 @@ function App() {
    */
   const handleLogout = async () => {
     try {
-      await Auth.signOut()
+      await window.Auth.signOut()
       setIsAuthenticated(false)
       setUser(null)
       setCurrentCharacter(null)

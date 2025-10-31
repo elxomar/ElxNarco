@@ -11,7 +11,6 @@
 
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Auth } from 'aws-amplify'
 
 const LoginScreen = ({ onAuthSuccess }) => {
   // Form state management
@@ -51,15 +50,15 @@ const LoginScreen = ({ onAuthSuccess }) => {
         throw new Error('Please fill in all fields')
       }
 
-      // Attempt to sign in with AWS Cognito
-      await Auth.signIn(formData.email, formData.password)
+      // Attempt to sign in with mock Auth
+      await window.Auth.signIn(formData.email, formData.password)
       
       // Call success callback to update app state
       onAuthSuccess()
     } catch (error) {
       console.error('Login error:', error)
       
-      // Handle specific AWS Cognito errors
+      // Handle specific authentication errors
       switch (error.code) {
         case 'UserNotConfirmedException':
           setError('Please confirm your email address before logging in')

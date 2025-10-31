@@ -12,7 +12,6 @@
 
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Auth } from 'aws-amplify'
 
 const RegisterScreen = ({ onAuthSuccess }) => {
   // Form state management
@@ -80,19 +79,21 @@ const RegisterScreen = ({ onAuthSuccess }) => {
         throw new Error('Password must be at least 8 characters long and contain uppercase, lowercase, numbers, and special characters')
       }
 
-      // Attempt to sign up with AWS Cognito
-      const { user } = await Auth.signUp({
-        username: formData.email,
-        password: formData.password,
-        attributes: {
-          email: formData.email,
-          preferred_username: formData.username
-        }
+      // Attempt to sign up with mock Auth (simplified for local testing)
+      const { user } = await window.Auth.signUp(formData.email, formData.password, {
+        email: formData.email,
+        preferred_username: formData.username
       })
 
       console.log('Registration successful:', user)
-      setSuccess('Registration successful! Please check your email for a confirmation code.')
-      setNeedsConfirmation(true)
+      
+      // For mock auth, we'll skip email confirmation and directly authenticate
+      setSuccess('Registration successful! You are now logged in.')
+      
+      // Call success callback to update app state
+      setTimeout(() => {
+        onAuthSuccess()
+      }, 1000)
     } catch (error) {
       console.error('Registration error:', error)
       
