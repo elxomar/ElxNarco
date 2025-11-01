@@ -1,16 +1,26 @@
 /**
- * TravelMap Component
- * Interactive map for traveling between cities in Mexico and USA
+ * TravelMap Component - Mobile-Optimized Interactive Travel System
+ * Professional travel interface for navigating between cities in Mexico and USA
  * 
  * Features:
- * - Visual map with clickable city locations
- * - Travel cost and stamina requirements
- * - Travel confirmation modal
- * - Real-time updates to character location
- * - Different regions (Mexico vs USA)
+ * - Mobile-first responsive design with touch-friendly interactions
+ * - Visual map with clickable city locations optimized for mobile
+ * - Travel cost and stamina requirements with clear visual feedback
+ * - Professional confirmation modal with detailed cost breakdown
+ * - Real-time updates to character location with smooth animations
+ * - Separate regions (Mexico vs USA) with distinct visual styling
+ * - Back button navigation for seamless user experience
+ * - Accessibility support with proper ARIA labels and keyboard navigation
+ * 
+ * Mobile Optimizations:
+ * - Touch-friendly city markers with adequate spacing
+ * - Responsive grid layout for city information cards
+ * - Optimized modal design for mobile screens
+ * - Thumb-friendly button placement and sizing
  */
 
 import React, { useState } from 'react'
+import { BackButtonHeader } from '../ui/BackButton'
 
 const TravelMap = ({ character, onCharacterUpdate }) => {
   const [selectedCity, setSelectedCity] = useState(null)
@@ -153,45 +163,53 @@ const TravelMap = ({ character, onCharacterUpdate }) => {
   }
 
   return (
-    <div className="min-h-screen py-8 px-4">
+    <div className="min-h-screen py-4 px-4 pb-20">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-muted-gold glow-text mb-2">
-            Travel Map
-          </h1>
-          <p className="text-gray-400 text-lg">
-            Current Location: <span className="text-muted-gold">{character.location}</span>
+        {/* Header with Back Button */}
+        <BackButtonHeader 
+          title="Travel Map" 
+          to="/menu"
+          className="mb-6"
+        />
+
+        {/* Current Status */}
+        <div className="text-center mb-6">
+          <p className="text-gray-400 text-base md:text-lg mb-3">
+            Current Location: <span className="text-muted-gold font-semibold">{character.location}</span>
           </p>
-          <div className="flex justify-center space-x-6 mt-4 text-sm">
-            <span>💰 Cash: <span className="text-green-400">${character.cash.toLocaleString()}</span></span>
-            <span>⚡ Stamina: <span className="text-blue-400">{character.stamina}/100</span></span>
+          <div className="flex flex-wrap justify-center gap-4 text-sm">
+            <div className="bg-deep-gray bg-opacity-50 px-3 py-2 rounded-lg border border-gray-600">
+              <span>💰 Cash: <span className="text-green-400 font-bold">${character.cash.toLocaleString()}</span></span>
+            </div>
+            <div className="bg-deep-gray bg-opacity-50 px-3 py-2 rounded-lg border border-gray-600">
+              <span>⚡ Stamina: <span className="text-blue-400 font-bold">{character.stamina}/100</span></span>
+            </div>
           </div>
         </div>
 
         {/* Interactive Map */}
-        <div className="card mb-8">
-          <h2 className="text-2xl font-bold text-muted-gold mb-6 text-center">
+        <div className="card mb-6">
+          <h2 className="text-xl md:text-2xl font-bold text-muted-gold mb-4 text-center">
             North America
           </h2>
           
-          <div className="relative bg-gradient-to-b from-blue-900 to-green-900 rounded-lg p-8 min-h-[500px] overflow-hidden">
+          <div className="relative bg-gradient-to-b from-blue-900 to-green-900 rounded-lg p-4 md:p-8 min-h-[400px] md:min-h-[500px] overflow-hidden">
             {/* Map Background */}
             <div className="absolute inset-0 opacity-20">
               <div className="w-full h-full bg-gradient-to-br from-gray-800 via-gray-700 to-gray-900 rounded-lg"></div>
             </div>
 
             {/* USA Region Label */}
-            <div className="absolute top-4 left-4 text-xl font-bold text-blue-300">
+            <div className="absolute top-2 md:top-4 left-2 md:left-4 text-lg md:text-xl font-bold text-blue-300">
               🇺🇸 United States
             </div>
 
             {/* Mexico Region Label */}
-            <div className="absolute bottom-4 left-4 text-xl font-bold text-green-300">
+            <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 text-lg md:text-xl font-bold text-green-300">
               🇲🇽 Mexico
             </div>
 
-            {/* City Markers */}
+            {/* City Markers - Enhanced for Mobile */}
             {getAllCities().map(city => {
               const isCurrentLocation = city.name === character.location
               const canAfford = character.cash >= city.travelCost && character.stamina >= city.staminaCost
@@ -201,11 +219,11 @@ const TravelMap = ({ character, onCharacterUpdate }) => {
                   key={city.id}
                   onClick={() => handleCityClick(city)}
                   disabled={isCurrentLocation}
-                  className={`absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ${
+                  className={`absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 touch-manipulation ${
                     isCurrentLocation
                       ? 'text-muted-gold scale-125 cursor-default'
                       : canAfford
-                      ? 'text-pale-white hover:text-muted-gold hover:scale-110 cursor-pointer'
+                      ? 'text-pale-white hover:text-muted-gold hover:scale-110 cursor-pointer active:scale-95'
                       : 'text-gray-500 cursor-not-allowed'
                   }`}
                   style={{
@@ -213,12 +231,13 @@ const TravelMap = ({ character, onCharacterUpdate }) => {
                     top: `${city.coordinates.y}%`
                   }}
                   title={`${city.name} - $${city.travelCost} / ${city.staminaCost} stamina`}
+                  aria-label={`Travel to ${city.name}. Cost: $${city.travelCost}, Stamina: ${city.staminaCost}`}
                 >
-                  <div className="text-center">
-                    <div className={`text-3xl mb-1 ${isCurrentLocation ? 'animate-pulse' : ''}`}>
+                  <div className="text-center p-2">
+                    <div className={`text-2xl md:text-3xl mb-1 ${isCurrentLocation ? 'animate-pulse' : ''}`}>
                       {isCurrentLocation ? '📍' : '🏙️'}
                     </div>
-                    <div className="text-xs font-bold bg-black bg-opacity-75 px-2 py-1 rounded">
+                    <div className="text-xs font-bold bg-black bg-opacity-75 px-2 py-1 rounded whitespace-nowrap">
                       {city.name}
                     </div>
                   </div>
@@ -284,64 +303,75 @@ const TravelMap = ({ character, onCharacterUpdate }) => {
           })}
         </div>
 
-        {/* Travel Confirmation Modal */}
+        {/* Travel Confirmation Modal - Mobile Optimized */}
         {showConfirmation && selectedCity && (
           <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
-            <div className="card max-w-md w-full">
-              <h2 className="text-2xl font-bold text-center mb-4 text-muted-gold">
+            <div className="card max-w-md w-full max-h-[90vh] overflow-y-auto">
+              <h2 className="text-xl md:text-2xl font-bold text-center mb-4 text-muted-gold">
                 Confirm Travel
               </h2>
 
               <div className="text-center mb-6">
-                <p className="text-lg mb-2">
+                <p className="text-base md:text-lg mb-2">
                   Travel to <span className="text-muted-gold font-bold">{selectedCity.name}</span>?
                 </p>
                 <p className="text-sm text-gray-400 mb-4">
                   {selectedCity.description}
                 </p>
 
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span>Cost:</span>
-                    <span className="text-red-400">-${selectedCity.travelCost}</span>
+                <div className="space-y-3 text-sm">
+                  <div className="bg-deep-gray bg-opacity-50 p-3 rounded-lg">
+                    <div className="flex justify-between items-center mb-2">
+                      <span>Travel Cost:</span>
+                      <span className="text-red-400 font-bold">-${selectedCity.travelCost}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span>Stamina Cost:</span>
+                      <span className="text-blue-400 font-bold">-{selectedCity.staminaCost}</span>
+                    </div>
                   </div>
-                  <div className="flex justify-between">
-                    <span>Stamina:</span>
-                    <span className="text-blue-400">-{selectedCity.staminaCost}</span>
-                  </div>
-                  <hr className="border-gray-600" />
-                  <div className="flex justify-between font-bold">
-                    <span>Remaining Cash:</span>
-                    <span className="text-green-400">
-                      ${(character.cash - selectedCity.travelCost).toLocaleString()}
-                    </span>
-                  </div>
-                  <div className="flex justify-between font-bold">
-                    <span>Remaining Stamina:</span>
-                    <span className="text-blue-400">
-                      {Math.max(0, character.stamina - selectedCity.staminaCost)}/100
-                    </span>
+                  
+                  <div className="bg-deep-gray bg-opacity-50 p-3 rounded-lg border border-muted-gold">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="font-semibold">Remaining Cash:</span>
+                      <span className="text-green-400 font-bold">
+                        ${(character.cash - selectedCity.travelCost).toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="font-semibold">Remaining Stamina:</span>
+                      <span className="text-blue-400 font-bold">
+                        {Math.max(0, character.stamina - selectedCity.staminaCost)}/100
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className="flex space-x-4">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <button
                   onClick={() => {
                     setShowConfirmation(false)
                     setSelectedCity(null)
                   }}
-                  className="btn-secondary flex-1"
+                  className="btn-secondary flex-1 py-3"
                   disabled={isTraveling}
                 >
                   Cancel
                 </button>
                 <button
                   onClick={confirmTravel}
-                  className="btn-primary flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="btn-primary flex-1 py-3 disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={isTraveling}
                 >
-                  {isTraveling ? 'Traveling...' : 'Travel'}
+                  {isTraveling ? (
+                    <span className="flex items-center justify-center">
+                      <span className="animate-spin mr-2">⏳</span>
+                      Traveling...
+                    </span>
+                  ) : (
+                    'Confirm Travel'
+                  )}
                 </button>
               </div>
             </div>

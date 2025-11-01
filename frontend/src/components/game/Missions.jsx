@@ -1,16 +1,26 @@
 /**
- * Missions Component
- * Displays available missions and handles mission completion logic
+ * Missions Component - Mobile-Optimized Mission System
+ * Professional mission interface with skill-based completion logic
  * 
  * Features:
- * - Mission list with difficulty indicators
- * - Skill-based success probability calculation
- * - Mission completion with rewards (cash + XP)
- * - Mission failure consequences
- * - Location-based mission filtering
+ * - Mobile-first responsive design with touch-friendly interactions
+ * - Mission list with clear difficulty indicators and visual hierarchy
+ * - Skill-based success probability calculation with transparent mechanics
+ * - Mission completion with rewards (cash + XP) and failure consequences
+ * - Location-based mission filtering for enhanced gameplay depth
+ * - Back button navigation for seamless user experience
+ * - Professional loading states and error handling
+ * - Accessibility support with proper ARIA labels
+ * 
+ * Mobile Optimizations:
+ * - Card-based layout optimized for vertical scrolling
+ * - Touch-friendly button sizing and spacing
+ * - Responsive modal design for mission confirmation
+ * - Optimized typography and visual hierarchy for mobile screens
  */
 
 import React, { useState, useEffect } from 'react'
+import { BackButtonHeader } from '../ui/BackButton'
 
 const Missions = ({ character, onCharacterUpdate }) => {
   const [availableMissions, setAvailableMissions] = useState([])
@@ -312,20 +322,30 @@ const Missions = ({ character, onCharacterUpdate }) => {
   }
 
   return (
-    <div className="min-h-screen py-8 px-4">
+    <div className="min-h-screen py-4 px-4 pb-20">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-muted-gold glow-text mb-2">
-            Available Missions
-          </h1>
-          <p className="text-gray-400 text-lg">
+        {/* Header with Back Button */}
+        <BackButtonHeader 
+          title="Available Missions" 
+          to="/menu"
+          className="mb-6"
+        />
+
+        {/* Status Info */}
+        <div className="text-center mb-6">
+          <p className="text-gray-400 text-base md:text-lg mb-3">
             Complete jobs to earn cash and experience
           </p>
-          <div className="flex justify-center space-x-6 mt-4 text-sm">
-            <span>📍 Location: <span className="text-muted-gold">{character.location}</span></span>
-            <span>💰 Cash: <span className="text-green-400">${character.cash.toLocaleString()}</span></span>
-            <span>❤️ Health: <span className="text-red-400">{character.health}/100</span></span>
+          <div className="flex flex-wrap justify-center gap-4 text-sm">
+            <div className="bg-deep-gray bg-opacity-50 px-3 py-2 rounded-lg border border-gray-600">
+              <span>📍 Location: <span className="text-muted-gold font-semibold">{character.location}</span></span>
+            </div>
+            <div className="bg-deep-gray bg-opacity-50 px-3 py-2 rounded-lg border border-gray-600">
+              <span>💰 Cash: <span className="text-green-400 font-bold">${character.cash.toLocaleString()}</span></span>
+            </div>
+            <div className="bg-deep-gray bg-opacity-50 px-3 py-2 rounded-lg border border-gray-600">
+              <span>❤️ Health: <span className="text-red-400 font-bold">{character.health}/100</span></span>
+            </div>
           </div>
         </div>
 
