@@ -1,67 +1,140 @@
 /**
- * Global styles for Narco Life RPG
+ * Global styles for Narco Life RPG - Mobile-First Professional Design
  * Includes Tailwind CSS imports and custom styling for the dark urban theme
+ * Optimized for mobile devices with professional game studio quality
  */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Custom base styles */
+/* Custom base styles - Mobile-First Approach */
 @layer base {
   body {
     @apply bg-charcoal text-pale-white font-sans antialiased;
     background-image: radial-gradient(circle, transparent 20%, rgba(14, 14, 14, 0.8) 100%);
     min-height: 100vh;
+    /* Prevent horizontal scrolling on mobile */
+    overflow-x: hidden;
+    /* Improve touch scrolling on iOS */
+    -webkit-overflow-scrolling: touch;
   }
   
   * {
     @apply box-border;
   }
+
+  /* Improve touch targets for mobile */
+  button, a, input, select, textarea {
+    touch-action: manipulation;
+  }
+
+  /* Prevent zoom on input focus (iOS) */
+  input, select, textarea {
+    font-size: 16px;
+  }
+
+  /* Smooth scrolling for better UX */
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
-/* Custom component styles */
+/* Custom component styles - Professional Game Studio Quality */
 @layer components {
   .btn-primary {
     @apply bg-gradient-to-r from-crimson to-red-700 hover:from-red-700 hover:to-crimson 
            text-pale-white font-bold py-3 px-6 rounded-lg shadow-crimson-glow 
-           transition-all duration-300 transform hover:scale-105 hover:shadow-lg;
+           transition-all duration-300 transform hover:scale-105 hover:shadow-lg
+           active:scale-95 focus:outline-none focus:ring-2 focus:ring-crimson focus:ring-opacity-50;
+    /* Minimum touch target size for mobile accessibility */
+    min-height: 44px;
+    min-width: 44px;
   }
   
   .btn-secondary {
     @apply bg-gradient-to-r from-deep-gray to-gray-700 hover:from-gray-700 hover:to-deep-gray 
            text-pale-white font-semibold py-2 px-4 rounded-lg border border-muted-gold 
-           transition-all duration-300 hover:shadow-glow;
+           transition-all duration-300 hover:shadow-glow active:scale-95
+           focus:outline-none focus:ring-2 focus:ring-muted-gold focus:ring-opacity-50;
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .btn-minimal {
+    @apply text-muted-gold hover:text-pale-white py-2 px-3 rounded-lg
+           transition-all duration-300 hover:bg-deep-gray hover:bg-opacity-50
+           active:scale-95 focus:outline-none focus:ring-2 focus:ring-muted-gold focus:ring-opacity-50;
+    min-height: 44px;
+    min-width: 44px;
   }
   
   .card {
-    @apply bg-deep-gray border border-gray-600 rounded-lg p-6 shadow-lg 
-           backdrop-blur-sm bg-opacity-90;
+    @apply bg-deep-gray border border-gray-600 rounded-lg p-4 md:p-6 shadow-lg 
+           backdrop-blur-sm bg-opacity-90 transition-all duration-300;
+  }
+
+  .card-interactive {
+    @apply card hover:border-muted-gold cursor-pointer transform hover:scale-102
+           active:scale-98 transition-all duration-300;
   }
   
   .input-field {
-    @apply bg-deep-gray border border-gray-600 rounded-lg px-4 py-2 
+    @apply bg-deep-gray border border-gray-600 rounded-lg px-4 py-3
            text-pale-white placeholder-gray-400 focus:border-muted-gold 
-           focus:outline-none focus:ring-2 focus:ring-muted-gold focus:ring-opacity-50;
+           focus:outline-none focus:ring-2 focus:ring-muted-gold focus:ring-opacity-50
+           transition-all duration-300;
+    min-height: 44px;
   }
   
   .hud-stat {
     @apply bg-deep-gray bg-opacity-80 border border-muted-gold rounded-lg 
-           px-3 py-2 text-sm font-semibold;
+           px-2 md:px-3 py-1 md:py-2 text-xs md:text-sm font-semibold
+           transition-all duration-300;
   }
   
   .mission-card {
-    @apply card hover:border-muted-gold transition-all duration-300 
-           cursor-pointer transform hover:scale-102;
+    @apply card-interactive;
   }
   
   .npc-card {
-    @apply card hover:border-crimson transition-all duration-300 
-           cursor-pointer transform hover:scale-102;
+    @apply card hover:border-crimson cursor-pointer transform hover:scale-102
+           active:scale-98 transition-all duration-300;
+  }
+
+  /* Mobile-specific navigation styles */
+  .mobile-nav-item {
+    @apply flex items-center space-x-4 p-4 rounded-lg transition-colors
+           active:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-muted-gold focus:ring-opacity-50;
+    min-height: 56px; /* Larger touch target for navigation */
+  }
+
+  /* Professional loading spinner */
+  .loading-spinner {
+    @apply animate-spin rounded-full border-2 border-gray-600 border-t-muted-gold;
+  }
+
+  /* Professional progress bars */
+  .progress-bar {
+    @apply w-full bg-gray-700 rounded-full overflow-hidden;
+  }
+
+  .progress-fill {
+    @apply h-full transition-all duration-500 ease-out;
+  }
+
+  /* Mobile-optimized modal */
+  .modal-mobile {
+    @apply fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4;
+  }
+
+  .modal-content-mobile {
+    @apply w-full max-w-md bg-deep-gray border border-muted-gold rounded-t-xl sm:rounded-xl
+           shadow-2xl backdrop-blur-sm max-h-[90vh] overflow-y-auto;
   }
 }
 
-/* Custom utility classes */
+/* Custom utility classes - Enhanced for Mobile */
 @layer utilities {
   .text-shadow {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
@@ -73,5 +146,116 @@
   
   .crimson-glow-text {
     text-shadow: 0 0 10px rgba(179, 0, 0, 0.8);
+  }
+
+  /* Mobile-specific utilities */
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Professional animations */
+  .fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  .slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+
+  .scale-102 {
+    transform: scale(1.02);
+  }
+
+  .scale-98 {
+    transform: scale(0.98);
+  }
+
+  /* Responsive text sizing */
+  .text-responsive-sm {
+    @apply text-sm md:text-base;
+  }
+
+  .text-responsive-base {
+    @apply text-base md:text-lg;
+  }
+
+  .text-responsive-lg {
+    @apply text-lg md:text-xl;
+  }
+
+  .text-responsive-xl {
+    @apply text-xl md:text-2xl;
+  }
+
+  .text-responsive-2xl {
+    @apply text-2xl md:text-3xl;
+  }
+
+  /* Mobile-optimized spacing */
+  .space-mobile {
+    @apply space-y-3 md:space-y-4;
+  }
+
+  .gap-mobile {
+    @apply gap-3 md:gap-4;
+  }
+
+  .p-mobile {
+    @apply p-3 md:p-4;
+  }
+
+  .px-mobile {
+    @apply px-3 md:px-4;
+  }
+
+  .py-mobile {
+    @apply py-3 md:py-4;
+  }
+}
+
+/* Keyframe animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Mobile-specific media queries for fine-tuning */
+@media (max-width: 640px) {
+  .card {
+    @apply p-3;
+  }
+  
+  .btn-primary, .btn-secondary {
+    @apply text-sm px-4 py-3;
+  }
+}
+
+/* High DPI displays optimization */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .glow-text, .crimson-glow-text {
+    text-shadow: 0 0 5px rgba(212, 175, 55, 0.6);
   }
 }

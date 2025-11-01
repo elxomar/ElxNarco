@@ -1,16 +1,26 @@
 /**
- * Streets Component - Marketplace
- * NPCs for buying and selling items and drugs with dynamic pricing
+ * Streets Component - Mobile-Optimized Marketplace System
+ * Professional marketplace interface for trading with NPCs
  * 
  * Features:
- * - Location-based NPCs with different inventories
- * - Dynamic pricing that fluctuates over time
- * - Buy/sell transactions with inventory management
- * - Different NPC types (dealers, merchants, fences)
- * - Transaction validation and error handling
+ * - Mobile-first responsive design with touch-friendly interactions
+ * - Location-based NPCs with different inventories and personalities
+ * - Dynamic pricing system that fluctuates over time for realistic economy
+ * - Comprehensive buy/sell transactions with inventory management
+ * - Different NPC types (dealers, merchants, fences) with unique offerings
+ * - Professional transaction validation and error handling
+ * - Back button navigation for seamless user experience
+ * - Accessibility support with proper ARIA labels
+ * 
+ * Mobile Optimizations:
+ * - Card-based NPC layout optimized for vertical scrolling
+ * - Touch-friendly transaction interface with clear visual feedback
+ * - Responsive modal design for transaction confirmation
+ * - Optimized typography and spacing for mobile screens
  */
 
 import React, { useState, useEffect } from 'react'
+import { BackButtonHeader } from '../ui/BackButton'
 
 const Streets = ({ character, onCharacterUpdate }) => {
   const [npcs, setNpcs] = useState([])
